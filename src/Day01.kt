@@ -1,17 +1,36 @@
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
-    }
-
-    fun part2(input: List<String>): Int {
-        return input.size
-    }
-
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
-
+    val testInput = readInput("Day01Test")
     val input = readInput("Day01")
-    println(part1(input))
-    println(part2(input))
+    val inp = input.map { it.toInt() }
+
+
+    fun part1(): Int {
+        val h = HashSet<Int>(inp.size)
+        inp.forEach {
+            if (h.contains(2020 - it)) {
+                return it * (2020 - it)
+            } else {
+                h.add(it)
+            }
+        }
+        return -1
+    }
+
+    fun part2(): Int {
+        val h = HashSet<Int>(inp.size)
+        for(i in inp.indices-1){
+            for(j in i+1 until inp.size){
+                if (h.contains(2020-inp[i]-inp[j])){
+                    return (inp[i]*inp[j]*(2020-inp[i]-inp[j]))
+                }
+                h.add(inp[j])
+            }
+            h.add(inp[i])
+        }
+        return -1
+    }
+
+    println(part1())
+    println(part2())
+
 }
